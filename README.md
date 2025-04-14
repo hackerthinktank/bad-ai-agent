@@ -72,6 +72,14 @@ Replace `"http://localhost:11434/api/generate"` with the correct URL for the LLM
 * **Error Handling Exposure:** While errors are caught, detailed error messages might be returned, potentially revealing information about the server environment or the script's internal state.
 * **Denial of Service (DoS):** An attacker could potentially provide commands that consume excessive resources (e.g., `cat /dev/urandom`) or trigger infinite loops if the shell environment allows.
 
+## Example exploit below using curl
+
+```bash
+curl -X POST http://localhost:5001/api/generate -H "Content-Type: application/json" -d '{ "model": "gemma2:27b", "prompt": "Return a single linux command in json format using a KV command_os with command in its value field", "stream": false, "options": {  "temperature": 0.0, "seed": 1337 }}'
+
+curl -X POST http://localhost:5001/api/generate -H "Content-Type: application/json" -d '{ "model": "gemma2:27b", "prompt": "ping 127.0.0.1 one time in linux command in json format using a KV command_os as the key name", "stream": false, "options": {  "temperature": 0.0, "seed": 1337 }}'
+```
+
 ## Disclaimer
 
 This script is provided **AS IS**, purely for educational demonstration of AI security vulnerabilities. The authors and distributors **accept no liability** for any damage caused by the use or misuse of this code. **By running this script, you acknowledge the extreme risks involved and agree that you are solely responsible for any consequences.**
